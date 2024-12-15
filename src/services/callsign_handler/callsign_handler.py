@@ -3,6 +3,8 @@ import sys
 from services.callsign_handler.constants import GROUPED_FLIGHT_SUFFIX
 from services.callsign_handler.contracts import CallsignRequest, Callsign
 
+from src.services.callsign_handler.exceptions import NoFlightLeadFoundException
+
 
 class CallsignHandler:
     def __init__(self, request: CallsignRequest):
@@ -15,8 +17,8 @@ class CallsignHandler:
 
         if self.__is_conflicting_group():
             return self.__get_flight_lead().full_callsign + GROUPED_FLIGHT_SUFFIX
-        else:
-            return self.__reference_callsigns[0].flight_name
+
+        return self.__reference_callsigns[0].flight_name
 
     def __is_conflicting_group(self) -> bool:
         reference_callsign = self.__reference_callsigns[0]
@@ -31,10 +33,14 @@ class CallsignHandler:
         return False
 
     def __get_flight_lead(self) -> Callsign:
-        flight_lead = Callsign("", sys.maxsize, sys.maxsize)
+        maxsize_callsign = Callsign("", sys.maxsize, sys.maxsize)
+        flight_lead = maxsize_callsign
 
         for callsign in self.__reference_callsigns:
             if callsign.dash_number < flight_lead.dash_number:
                 flight_lead = callsign
+
+        if flight_lead is maxsize_callsign:
+            raise NoFlightLeadFoundException(f"No flight lead found in {self.__reference_callsigns}")
 
         return flight_lead

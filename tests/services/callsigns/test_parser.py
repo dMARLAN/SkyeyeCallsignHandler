@@ -11,11 +11,12 @@ def test_parse_standard_nato():
     assert CallsignParser("AA 1").parse() == Callsign("AA", None, 1)
 
 
-def test_parse_stupid_usaf_style():
-    assert CallsignParser("AA 1").parse() == Callsign("AA", None, 1)
+def test_parse_dcsism_dash_insertion():
+    assert CallsignParser("AA 1-1").parse() == Callsign("AA", 1, 1)
 
 
 def test_parse_non_nato_callsign():
+    assert CallsignParser("AA 1").parse() == Callsign("AA", None, 1)
     assert CallsignParser("AA 123").parse() == Callsign("AA", None, 123)
 
 

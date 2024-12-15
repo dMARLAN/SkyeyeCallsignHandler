@@ -19,23 +19,26 @@ class CallsignParser:
             # Response: "Invalid callsign."
             raise InvalidCallsignException(f"Invalid callsign: {self.__callsign}")
 
-        if len(match.group(2)) == 2:
-            return self.__handle_standard_nato_callsign(match)
+        flight_name = match.group(1)
+        digits = match.group(2).replace("-", "")
 
-        return self.__handle_non_standard_callsign(match)
+        if len(digits) == 2:
+            return self.__handle_standard_nato_callsign(flight_name, digits)
+
+        return self.__handle_non_standard_callsign(flight_name, digits)
 
     @staticmethod
-    def __handle_standard_nato_callsign(match: Match[str]) -> Callsign:
+    def __handle_standard_nato_callsign(flight_name: str, digits: str) -> Callsign:
         return Callsign(
-            match.group(1),
-            int(match.group(2)[0]),
-            int(match.group(2)[1]),
+            flight_name,
+            int(digits[0]),
+            int(digits[1]),
         )
 
     @staticmethod
-    def __handle_non_standard_callsign(match: Match[str]) -> Callsign:
+    def __handle_non_standard_callsign(flight_name: str, digits: str) -> Callsign:
         return Callsign(
-            match.group(1),
+            flight_name,
             None,
-            int(match.group(2)),
+            int(digits),
         )

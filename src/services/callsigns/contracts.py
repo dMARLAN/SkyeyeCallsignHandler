@@ -13,7 +13,7 @@ class Callsign:
     @property
     def full_callsign(self) -> str:
         if self.flight_number:
-            return f"{self.flight_name} {self.flight_number} {self.dash_number}"
+            return f"{self.flight_name} {self.flight_number}{self.dash_number}"
         return f"{self.flight_name} {self.dash_number}"
 
 

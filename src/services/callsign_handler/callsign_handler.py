@@ -34,7 +34,7 @@ class CallsignHandler:
         flight_lead = Callsign("", sys.maxsize, sys.maxsize)
 
         for callsign in self.__reference_callsigns:
-            if callsign.flight_number < flight_lead.dash_number:
+            if callsign.dash_number < flight_lead.dash_number:
                 flight_lead = callsign
 
         return flight_lead

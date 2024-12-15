@@ -2,7 +2,7 @@ import sys
 
 from services.callsign_handler.constants import GROUPED_FLIGHT_SUFFIX
 from services.callsign_handler.contracts import CallsignRequest, Callsign
-from src.services.callsign_handler.exceptions import NoFlightLeadFoundException
+from services.callsign_handler.exceptions import NoFlightLeadFoundException
 
 
 class CallsignHandler:

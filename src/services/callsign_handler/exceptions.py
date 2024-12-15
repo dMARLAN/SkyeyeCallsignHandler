@@ -4,3 +4,7 @@ class CallsignHandlerException(Exception):
 
 class NoFlightLeadFoundException(CallsignHandlerException):
     pass
+
+
+class EmptyReferenceCallsignsException(CallsignHandlerException):
+    pass

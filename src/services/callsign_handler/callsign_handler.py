@@ -3,7 +3,7 @@ import sys
 from services.callsign_handler.constants import GROUPED_FLIGHT_SUFFIX
 from services.callsign_handler.contracts import CallsignRequest, Callsign
 
-from src.services.callsign_handler.exceptions import NoFlightLeadFoundException
+from src.services.callsign_handler.exceptions import NoFlightLeadFoundException, EmptyReferenceCallsignsException
 
 
 class CallsignHandler:
@@ -12,6 +12,9 @@ class CallsignHandler:
         self.__all_callsigns = request.all_callsigns
 
     def process_request(self):
+        if len(self.__reference_callsigns) == 0:
+            raise EmptyReferenceCallsignsException("No reference callsigns provided")
+
         if len(self.__reference_callsigns) == 1:
             return self.__reference_callsigns[0].full_callsign
 

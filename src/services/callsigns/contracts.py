@@ -1,18 +1,20 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Optional
 
-from services.callsign_handler.exceptions import EmptyCallsignsException
+from services.callsigns.exceptions import EmptyCallsignsException
 
 
 @dataclass(frozen=True)
 class Callsign:
     flight_name: str
-    flight_number: int
+    flight_number: Optional[int]
     dash_number: int
 
     @property
     def full_callsign(self) -> str:
-        return f"{self.flight_name} {self.flight_number}{self.dash_number}"
+        if self.flight_number:
+            return f"{self.flight_name} {self.flight_number} {self.dash_number}"
+        return f"{self.flight_name} {self.dash_number}"
 
 
 @dataclass(frozen=True)

@@ -1,5 +1,4 @@
 import re
-from typing import Match
 
 from services.callsigns.constants import GOOD_CALLSIGN_REGEX_PATTERN
 from services.callsigns.contracts import Callsign

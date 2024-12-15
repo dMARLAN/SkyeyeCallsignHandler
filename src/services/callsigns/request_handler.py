@@ -7,12 +7,12 @@ class CallsignRequestHandler:
         self.__reference_callsigns = request.reference_callsigns
         self.__all_callsigns = request.all_callsigns
 
-    def process_request(self):
+    def process_request(self) -> str:
         if len(self.__reference_callsigns) == 1:
             return self.__reference_callsigns[0].full_callsign
 
         if self.__is_conflicting_group():
-            return self.__get_flight_lead().full_callsign + GROUPED_FLIGHT_SUFFIX
+            return f"{self.__get_flight_lead().full_callsign} {GROUPED_FLIGHT_SUFFIX}"
 
         return self.__reference_callsigns[0].flight_name
 

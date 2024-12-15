@@ -2,8 +2,7 @@ import sys
 
 from services.callsign_handler.constants import GROUPED_FLIGHT_SUFFIX
 from services.callsign_handler.contracts import CallsignRequest, Callsign
-
-from src.services.callsign_handler.exceptions import NoFlightLeadFoundException, EmptyReferenceCallsignsException
+from src.services.callsign_handler.exceptions import NoFlightLeadFoundException, EmptyCallsignsException
 
 
 class CallsignHandler:
@@ -12,8 +11,7 @@ class CallsignHandler:
         self.__all_callsigns = request.all_callsigns
 
     def process_request(self):
-        if len(self.__reference_callsigns) == 0:
-            raise EmptyReferenceCallsignsException("No reference callsigns provided")
+        self.__validate_inputs()
 
         if len(self.__reference_callsigns) == 1:
             return self.__reference_callsigns[0].full_callsign
@@ -22,6 +20,13 @@ class CallsignHandler:
             return self.__get_flight_lead().full_callsign + GROUPED_FLIGHT_SUFFIX
 
         return self.__reference_callsigns[0].flight_name
+
+    def __validate_inputs(self):
+        if len(self.__reference_callsigns) == 0:
+            raise EmptyCallsignsException("No reference callsigns provided")
+
+        if len(self.__all_callsigns) == 0:
+            raise EmptyCallsignsException("No all callsigns provided")
 
     def __is_conflicting_group(self) -> bool:
         reference_callsign = self.__reference_callsigns[0]

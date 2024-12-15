@@ -6,5 +6,5 @@ class NoFlightLeadFoundException(CallsignHandlerException):
     pass
 
 
-class EmptyReferenceCallsignsException(CallsignHandlerException):
+class EmptyCallsignsException(CallsignHandlerException):
     pass

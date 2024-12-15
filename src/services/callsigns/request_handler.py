@@ -29,4 +29,4 @@ class CallsignRequestHandler:
         return False
 
     def __get_flight_lead(self) -> Callsign:
-        return next(iter(sorted(self.__reference_callsigns, key=lambda x: x.dash_number)))
+        return next(iter(sorted(self.__reference_callsigns, key=lambda callsign: callsign.dash_number)))
